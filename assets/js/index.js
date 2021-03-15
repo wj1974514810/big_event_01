@@ -1,6 +1,20 @@
 $(function () {
     //后面页面液要用
     getUserInfo();
+
+
+    //退出
+    let layer = layui.layer;
+    $('#btnLogout').on('click', function () {
+        //弹窗，
+        layer.confirm('是否确定退出', { icon: 3, title: '提示' }, function (index) {
+            //清空本地myToken
+            localStorage.removeItem('myToken');
+            location.href = "/login.html";
+            //关闭询问框
+            layer.close(index);
+        });
+    })
 })
 
 //封装全局函数 获取用户信息 getUserInfo()
@@ -8,17 +22,27 @@ function getUserInfo() {
     $.ajax({
         url: '/my/userinfo',
         //配置头信息，设置token，身份识别认证
-        headers: {
-            //请求头
-            Authorization: localStorage.getItem('myToken') || ''
-        },
+        // headers: {
+        //     //请求头
+        //     Authorization: localStorage.getItem('myToken') || ''
+        // },
         success: function (res) {
             // console.log(res);
             if (res.status != 0) return layui.layer.msg(res.message, { icon: 5 });
 
             //头像和文字渲染
             renderAvatar(res.data);
-        }
+        },
+        //无论请求成功或失败都会触发
+        // complete: function (res) {
+        //     // console.log(res.responseJSON);
+        //     let obj = res.responseJSON;
+        //     if (obj.status && obj.message === "身份认证失败！") {
+        //         //跳转到登陆页面，销毁token
+        //         localStorage.removeItem('myToken');
+        //         location.href = "/login.html";
+        //     }
+        // }
     })
 }
 
@@ -39,3 +63,5 @@ function renderAvatar(user) {
         $('.text-avatar').hide();
     }
 }
+
+
