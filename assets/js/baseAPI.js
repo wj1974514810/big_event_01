@@ -14,19 +14,21 @@ $.ajaxPrefilter(function (options) {
         options.headers = {
             Authorization: localStorage.getItem('myToken') || ''
         }
-    }
 
-    //登陆拦截(没有登陆就强制登陆)
-    options.complete = function (res) {
-        // console.log(res.responseJSON);
-        let obj = res.responseJSON;
-        //后台返回的“身份认证失败！” 感叹号是中文的，去复制以免失败
-        if (obj.status == 1 && obj.message === "身份认证失败！") {
-            //跳转到登陆页面，销毁token
-            localStorage.removeItem('myToken');
-            location.href = "/login.html";
+        //登陆拦截(没有登陆就强制登陆)
+        options.complete = function (res) {
+            // console.log(res.responseJSON);
+            let obj = res.responseJSON;
+            //后台返回的“身份认证失败！” 感叹号是中文的，去复制以免失败
+            if (obj.status == 1 && obj.message === "身份认证失败！") {
+                //跳转到登陆页面，销毁token
+                localStorage.removeItem('myToken');
+                location.href = "/login.html";
+            }
         }
     }
+
+
 })
 
 
