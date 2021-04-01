@@ -102,10 +102,10 @@
         {{each data item index}}
                     <tr>
                         <td>{{item.name}}</td>
-                        <td>{{item.alias}}</td>
+                        <td>{{item.slug}}</td>
                         <td>
-                            <button class="layui-btn layui-btn-xs btn-edit" data-id="{{item.Id}}">编辑</button>
-                            <button class="layui-btn layui-btn-xs  layui-btn-danger btn-delete" data-id="{{item.Id}}" >删除</button>
+                            <button class="layui-btn layui-btn-xs btn-edit" data-id="{{item.id}}">编辑</button>
+                            <button class="layui-btn layui-btn-xs  layui-btn-danger btn-delete" data-id="{{item.id}}" >删除</button>
                         </td>
                     </tr>
         {{/each}}

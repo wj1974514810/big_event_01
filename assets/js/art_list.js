@@ -19,7 +19,7 @@ $(function () {
     //定义查询参数
     let q = {
         pagenum: 1,   //页码值
-        pagesize: 2,    //每页显示多少数据
+        pagesize: 5,    //每页显示多少数据
         cate_id: '',    //文章分类的Id
         state: ''       //文章的状态
     }
@@ -55,7 +55,9 @@ $(function () {
             url: '/my/article/cates',
             method: 'get',
             success: function (res) {
-                // console.log(res);
+                console.log(res);
+                console.log(res.data);
+                console.log(res.data[0]);
                 if (res.status != 0) {
                     return layer.msg(res.message)
                 }

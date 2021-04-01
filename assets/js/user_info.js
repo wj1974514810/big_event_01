@@ -18,16 +18,16 @@ $(function () {
         $.ajax({
             url: '/my/userinfo',
             //method==type
-            type: 'get',
+            method: 'GET',
             success: function (res) {
-                console.log(res);
+                console.log(res.data);
                 //失败返回
                 if (res.status != 0) {
                     return layui.layer.msg(res.message, { icon: 5 })
                 }
                 //成功渲染
                 //第一个参数必须跟表单里的lay-filter属性的值一样
-                form.val('formUserInfo', res.data)
+                form.val('formUserInfo', res.data[0])
             }
         })
     }
@@ -45,8 +45,13 @@ $(function () {
         e.preventDefault();
         $.ajax({
             url: '/my/userinfo',
-            type: 'post',
-            data: $(this).serialize(),
+            method: 'POST',
+            // data: $(this).serialize(),
+            data: {
+                id: window.parent.id,
+                nickname: $('[name=nickname]').val(),
+                email: $('[name=email]').val()
+            },
             success: function (res) {
                 // console.log(res);
                 if (res.status != 0) {

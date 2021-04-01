@@ -5,9 +5,10 @@ $(function () {
     function iniArtCateList() {
         $.ajax({
             method: 'GET',
-            url: '/my/article/cates',
+            url: '/article/cates',
             success: (res) => {
                 console.log(res);
+                console.log(res.data);
                 //状态判断
                 if (res.status != 0) {
                     return layer.msg(res.message);
@@ -35,9 +36,13 @@ $(function () {
     $('body').on('submit', '#form-add', function (e) {
         e.preventDefault();
         $.ajax({
-            url: '/my/article/addcates',
+            url: '/article/addcates',
             type: 'post',
-            data: $(this).serialize(),
+            // data: $(this).serialize(),
+            data: {
+                name: $('[name=name]').val(),
+                slug: $('[name=alias]').val()
+            },
             success: function (res) {
                 console.log(res);
                 if (res.status != 0) {
@@ -55,6 +60,7 @@ $(function () {
     //4、修改文章分类
     let indexEdit = null;
     let form = layui.form;
+    let ID = ''
     $('tbody').on('click', '.btn-edit', function () {
         indexEdit = layer.open({
             type: 1,
@@ -62,10 +68,12 @@ $(function () {
             title: '修改文章分类',
             content: $('#dialog-edit').html(),
         });
-        let Id = $(this).attr("data-id");
+        ID = $(this).attr("data-id");
+        console.log(ID);
         $.ajax({
-            url: '/my/article/cates/' + Id,
+            url: '/article/cates/',
             type: 'get',
+            data: { id: ID },
             success: function (res) {
                 // console.log(res);
                 if (res.status != 0) {
@@ -81,9 +89,14 @@ $(function () {
     $('body').on('submit', '#form-edit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: '/my/article/updatecate',
+            url: '/article/updatecate',
             type: 'post',
             data: $(this).serialize(),
+            data: {
+                id: ID,
+                name: $('[name=name]').val(),
+                slug: $('[name=alias]').val()
+            },
             success: function (res) {
                 console.log(res);
                 if (res.status != 0) {
@@ -104,12 +117,17 @@ $(function () {
     $('tbody').on('click', '.btn-delete', function () {
         //获取id
         let Id = $(this).attr("data-id");
+        // alert(Id)
         //对话框
         layer.confirm('是否确认删除?', { icon: 3, title: '提示' }, function (index) {
             $.ajax({
-                url: '/my/article/deletecate/' + Id,
+                url: '/article/deletecate',
                 type: 'get',
+                data: {
+                    id: Id
+                },
                 success: function (res) {
+                    console.log(1);
                     console.log(res);
                     if (res.status != 0) {
                         return layer.msg(res.message)

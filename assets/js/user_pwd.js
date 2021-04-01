@@ -24,10 +24,17 @@ $(function () {
     //修改密码
     $('form').on('submit', function (e) {
         e.preventDefault();
+        console.log(window);
+        var ID = window.parent.id
+        console.log(ID);
         $.ajax({
             url: '/my/updatepwd',
             type: 'post',
-            data: $(this).serialize(),
+            data: {
+                oldPwd: $('[name=oldPwd]').val(),
+                newPwd: $('[name=newPwd]').val(),
+                id: ID
+            },
             success: function (res) {
                 console.log(res);
                 if (res.status != 0) {

@@ -18,9 +18,11 @@ $(function () {
 })
 
 //封装全局函数 获取用户信息 getUserInfo()
+var id = ''
 function getUserInfo() {
     $.ajax({
         url: '/my/userinfo',
+        method: "GET",
         //配置头信息，设置token，身份识别认证
         // headers: {
         //     //请求头
@@ -28,10 +30,12 @@ function getUserInfo() {
         // },
         success: function (res) {
             // console.log(res);
-            if (res.status != 0) return layui.layer.msg(res.message, { icon: 5 });
+            // console.log(res.data[0].id);
+            id = res.data[0].id
+            renderAvatar(res.data[0]);
+            // if (res.status != 0) return layui.layer.msg(res.message, { icon: 5 });
 
             //头像和文字渲染
-            renderAvatar(res.data);
         },
         //无论请求成功或失败都会触发
         // complete: function (res) {
@@ -56,6 +60,7 @@ function renderAvatar(user) {
     if (user.user_pic == null) {
         //渲染文字头像，隐藏图片头像
         $('.layui-nav-img').hide();
+        // console.log(name);
         $('.text-avatar').html(name[0].toUpperCase());
     } else {
         //渲染图片头像，隐藏文字头像
