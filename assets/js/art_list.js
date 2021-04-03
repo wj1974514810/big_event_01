@@ -18,7 +18,7 @@ $(function () {
     }
     //定义查询参数
     let q = {
-        pagenum: 1,   //页码值
+        pagenum: 0,   //页码值
         pagesize: 5,    //每页显示多少数据
         cate_id: '',    //文章分类的Id
         state: ''       //文章的状态
@@ -52,12 +52,12 @@ $(function () {
     initCate();
     function initCate() {
         $.ajax({
-            url: '/my/article/cates',
+            url: '/article/cates',
             method: 'get',
             success: function (res) {
-                console.log(res);
-                console.log(res.data);
-                console.log(res.data[0]);
+                // console.log(res);
+                // console.log(res.data);
+                // console.log(res.data[0]);
                 if (res.status != 0) {
                     return layer.msg(res.message)
                 }
@@ -91,7 +91,7 @@ $(function () {
 
         //执行一个laypage实例
         laypage.render({
-            elem: 'pageBox', //注意，这里的 test1 是 ID，不用加 # 号
+            elem: 'pageBox',
             count: total, //数据总数，从服务端得到
             limit: q.pagesize,  //每页显示几条
             curr: q.pagenum,//初始化页面(当前页)
@@ -125,8 +125,11 @@ $(function () {
         //对话框
         layer.confirm('是否确认删除?', { icon: 3, title: '提示' }, function (index) {
             $.ajax({
-                url: '/my/article/delete/' + Id,
-                type: 'get',
+                url: '/my/article/delete',
+                method: 'get',
+                data: {
+                    id: Id
+                },
                 success: function (res) {
                     console.log(res);
                     if (res.status != 0) {

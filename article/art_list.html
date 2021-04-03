@@ -81,8 +81,8 @@
                         <td>{{item.date | dateFormat}}</td>
                         <td>{{item.state}}</td>
                         <td>
-                            <button class="layui-btn layui-btn-xs btn-edit" data-id="{{item.Id}}">编辑</button>
-                            <button class="layui-btn layui-btn-xs  layui-btn-danger btn-delete" data-id="{{item.Id}}" >删除</button>
+                            <button class="layui-btn layui-btn-xs btn-edit" data-id="{{item.id}}">编辑</button>
+                            <button class="layui-btn layui-btn-xs  layui-btn-danger btn-delete" data-id="{{item.id}}" >删除</button>
                         </td>
                     </tr>
         {{/each}}
@@ -91,7 +91,7 @@
     <script type="text/html" id="tpl-cate">
          <option value="">所有状态</option>
         {{each data item index}}                      
-            <option value="{{item.Id}}">{{item.name}}</option>
+            <option value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
     <script src="/assets/lib/layui/layui.all.js"></script>
